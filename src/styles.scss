@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.modal-content {
+    top: 100px;
+}
+::ng-deep .cdk-overlay-container {
+    position: fixed !important;
+    z-index: 100000 !important; /* set value you need */
+}
+
+::ng-deep .cdk-overlay-container mat-datepicker-content{
+    z-index:2000 !important;
+  }
+  
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }  

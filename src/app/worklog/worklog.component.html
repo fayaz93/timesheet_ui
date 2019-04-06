@@ -1,0 +1,90 @@
+<h1>Timesheet</h1>
+<div class="alignall">
+    <label>Select Employee: </label>
+    <select (change)="loadEmployeeWorklog($event.target.value)">        
+        <option *ngFor="let emp of employees" value={{emp.id}} [attr.selected]="emp.id == this.empId ? true : null">
+            {{emp.name}}
+        </option>
+    </select>
+</div>
+<div class="alignall center tsnav">
+    <div class="bold">
+        <a (click)="loadEmployeeWorklog(this.empId, this.prevStartDate, this.prevEndDate)">&lt;</a>
+        Week
+        <a (click)="loadEmployeeWorklog(this.empId, this.nextStartDate, this.nextEndDate)">></a></div>
+    <div>({{this.startDate}}) ({{this.endDate}})</div>
+</div>
+<div class="alignall right"><a href="javascript:;" (click)="openModal(template)"><mat-icon>add_circle</mat-icon></a></div>
+<table class="table">
+    <tr>
+        <th>Task Name</th>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+    </tr>
+    <tr *ngFor="let item of worklogs">
+        <td id="{{item.id}}">{{item.taskName}}</td>
+        <td>{{item.day1Effort}}</td>
+        <td>{{item.day2Effort}}</td>
+        <td>{{item.day3Effort}}</td>
+        <td>{{item.day4Effort}}</td>
+        <td>{{item.day5Effort}}</td>
+        <td>{{item.day6Effort}}</td>
+        <td>{{item.day7Effort}}</td>
+    </tr>
+    <tr>
+        <th>Total</th>
+        <th>{{caculateTotal('day1Effort')}}</th>
+        <th>{{caculateTotal('day2Effort')}}</th>
+        <th>{{caculateTotal('day3Effort')}}</th>
+        <th>{{caculateTotal('day4Effort')}}</th>
+        <th>{{caculateTotal('day5Effort')}}</th>
+        <th>{{caculateTotal('day6Effort')}}</th>
+        <th>{{caculateTotal('day7Effort')}}</th>
+    </tr>
+</table>
+<div class="navigation">
+    <button class="back" [routerLink]="['']">Back to list</button>
+    <button (click)="this.saveWorklogs()">Save</button>
+</div>
+<div class="center" *ngIf="success">
+    Worklog saved successfully.
+</div>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Worklog</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+    </div>
+    <div class="modal-body">
+            <table class="table">
+            <tr><td>Employee:</td><td>{{this.empName}}</td></tr>
+            <tr><td>Select Task:</td>
+                <td><select [(ngModel)]="this.worklogModel.taskId" required>        
+                    <option *ngFor="let task of tasks" value={{task.id}}>
+                        {{task.name}}
+                    </option>
+                </select></td></tr>
+            <tr><td>Date:</td><td>
+                    <select [(ngModel)]="this.worklogModel.date" required>        
+                            <option *ngFor="let day of days" value={{day}}>
+                                {{day}}
+                            </option>
+                        </select>      
+                </td></tr>
+            <tr><td>Hours</td>
+            <td><input type="number" [(ngModel)]="this.worklogModel.hours" required></td>
+            </tr>
+            </table>
+            <div class="navigation">
+                    <button class="back" (click)="this.addWorklog()">Add</button>
+                    <button (click)="modalRef.hide()">Cancel</button>
+                </div>
+                <p>Attention: The logs will not be saved until you click Save in next screen.</p>
+    </div>
+</ng-template>

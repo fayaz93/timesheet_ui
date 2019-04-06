@@ -1,0 +1,19 @@
+<h1>Employee List</h1>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Weekly Effort (Total)</th>
+        <th>Weekly Effort (Average)</th>
+    </tr>
+    <tr *ngFor="let item of employees" 
+         routerLink="/worklog/{{item.id}}/{{item.startDate | date: 'yyyy-MM-dd'}}/{{item.endDate | date: 'yyyy-MM-dd'}}"
+         class="clickable">
+        <td>{{item.id}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.totalWeeklyEffort}}</td>
+        <td>{{item.avgWeeklyEffort}}</td>
+    </tr>
+</table>
